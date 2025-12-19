@@ -49,11 +49,7 @@ export default function Home() {
 
           {/* ILLUSTRATION */}
           <div className="w-full max-w-md mx-auto flex justify-center">
-            <img
-              src="https://illustrations.popsy.co/white/worker-with-tools.svg"
-              alt="Service Worker"
-              className="w-full h-auto opacity-80"
-            />
+            <FaTools className="text-green-500 text-9xl opacity-80" />
           </div>
         </div>
       </section>
@@ -94,11 +90,7 @@ export default function Home() {
 
           {/* ILLUSTRATION */}
           <div className="w-full max-w-md mx-auto flex justify-center">
-            <img
-              src="https://illustrations.popsy.co/white/calendar.svg"
-              alt="Calendar"
-              className="w-full h-auto opacity-80"
-            />
+            <FaCalendarAlt className="text-blue-500 text-9xl opacity-80" />
           </div>
 
           <div>
