@@ -1,9 +1,8 @@
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
-import { useAuth } from "../../context/AuthContext";
+import { authAPI, getCurrentUser } from "../../services/api";
 
 export default function Login() {
-  const { login } = useAuth();
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
     email: "",
@@ -25,10 +24,23 @@ export default function Login() {
     setLoading(true);
 
     try {
-      const user = await login(formData.email, formData.password);
-      navigate(`/${user.role}`);
+      await authAPI.login(formData);
+      const user = getCurrentUser();
+      if (user?.role) {
+        // Redirect based on user role
+        if (user.role === 'admin') {
+          navigate('/admin/dashboard');
+        } else if (user.role === 'provider') {
+          navigate('/provider/dashboard');
+        } else {
+          navigate('/customer/dashboard');
+        }
+      } else {
+        navigate('/');
+      }
     } catch (err) {
-      setError("Invalid email or password");
+      console.error("Login error:", err);
+      setError(err.response?.data?.detail || "Invalid email or password");
     } finally {
       setLoading(false);
     }
@@ -49,7 +61,7 @@ export default function Login() {
           </p>
 
           {error && (
-            <div className="mb-4 text-red-600 text-sm">
+            <div className="mb-4 p-3 bg-red-50 border border-red-200 text-red-600 rounded text-sm">
               {error}
             </div>
           )}
@@ -61,7 +73,7 @@ export default function Login() {
               placeholder="Email Address"
               value={formData.email}
               onChange={handleChange}
-              className="w-full border rounded px-4 py-2"
+              className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
               required
             />
 
@@ -71,14 +83,14 @@ export default function Login() {
               placeholder="Password"
               value={formData.password}
               onChange={handleChange}
-              className="w-full border rounded px-4 py-2"
+              className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
               required
             />
 
             <button
               type="submit"
               disabled={loading}
-              className="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 rounded font-medium disabled:opacity-50"
+              className="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-lg font-medium disabled:opacity-50 disabled:cursor-not-allowed transition duration-200"
             >
               {loading ? "Logging in..." : "Login"}
             </button>
@@ -86,11 +98,11 @@ export default function Login() {
 
           <div className="mt-6 text-center text-sm text-gray-500">
             Don't have an account?{" "}
-            <Link to="/register/customer" className="text-blue-600 hover:underline">
+            <Link to="/register/customer" className="text-blue-600 hover:underline font-medium">
               Register as Customer
             </Link>{" "}
             or{" "}
-            <Link to="/register/provider" className="text-green-600 hover:underline">
+            <Link to="/register/provider" className="text-green-600 hover:underline font-medium">
               Register as Provider
             </Link>
           </div>
@@ -98,20 +110,41 @@ export default function Login() {
       </div>
 
       {/* RIGHT: BRAND IMAGE */}
-      <div className="hidden md:flex items-center justify-center bg-slate-900 text-white">
+      <div className="hidden md:flex items-center justify-center bg-gradient-to-br from-blue-900 to-slate-900 text-white">
         <div className="max-w-md px-6">
           <h2 className="text-3xl font-bold mb-4">
             Hire trusted local professionals
           </h2>
-          <p className="text-slate-300 mb-6">
+          <p className="text-blue-100 mb-6">
             From electricians to plumbers, Karigar helps you
             find reliable services near you — quickly and safely.
           </p>
 
-          <ul className="space-y-3 text-slate-200">
-            <li>✔ Verified service providers</li>
-            <li>✔ Transparent pricing</li>
-            <li>✔ Simple booking process</li>
+          <ul className="space-y-3 text-blue-100">
+            <li className="flex items-center">
+              <svg className="w-5 h-5 mr-2 text-green-400" fill="currentColor" viewBox="0 0 20 20">
+                <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+              </svg>
+              Verified service providers
+            </li>
+            <li className="flex items-center">
+              <svg className="w-5 h-5 mr-2 text-green-400" fill="currentColor" viewBox="0 0 20 20">
+                <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+              </svg>
+              Transparent pricing
+            </li>
+            <li className="flex items-center">
+              <svg className="w-5 h-5 mr-2 text-green-400" fill="currentColor" viewBox="0 0 20 20">
+                <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+              </svg>
+              Simple booking process
+            </li>
+            <li className="flex items-center">
+              <svg className="w-5 h-5 mr-2 text-green-400" fill="currentColor" viewBox="0 0 20 20">
+                <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+              </svg>
+              24/7 customer support
+            </li>
           </ul>
         </div>
       </div>

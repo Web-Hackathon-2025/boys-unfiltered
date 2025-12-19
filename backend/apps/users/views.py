@@ -9,7 +9,7 @@ from rest_framework.permissions import IsAuthenticated
 
 from .serializers import (
     UserSerializer, RegisterSerializer, LoginSerializer,
-    ProfileUpdateSerializer, ProviderRegisterSerializer
+    ProfileUpdateSerializer, ProviderRegisterSerializer  # ADD THIS
 )
 from .permissions import IsAdmin, IsOwnerOrReadOnly
 
