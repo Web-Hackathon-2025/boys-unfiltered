@@ -10,7 +10,7 @@ class ServiceProvider(BaseModel, Address):
         User, 
         on_delete=models.CASCADE,
         related_name='provider_profile',
-        limit_choices_to={'role': 'provider'}  # FIXED: Use string 'provider'
+        limit_choices_to={'role': 'provider'}
     )
     
     # Business Information
@@ -33,25 +33,27 @@ class ServiceProvider(BaseModel, Address):
         default=0,
         validators=[MinValueValidator(0), MaxValueValidator(100)]
     )
+    
+    # FIXED: Use callable defaults for JSONField
     certifications = models.JSONField(
-        default=list,
+        default=list,  # list is callable
         blank=True,
         help_text="List of certifications with name and year"
     )
     skills = models.JSONField(
-        default=list,
+        default=list,  # list is callable
         blank=True,
         help_text="List of skills/tags"
     )
     
     # Service Information
     service_categories = models.ManyToManyField(
-        'services.ServiceCategory',  # STRING REFERENCE
+        'services.ServiceCategory',
         related_name='providers',
         through='ProviderServiceCategory'
     )
     services_offered = models.JSONField(
-        default=list,
+        default=list,  # list is callable
         blank=True,
         help_text="Detailed list of services offered"
     )
@@ -60,8 +62,13 @@ class ServiceProvider(BaseModel, Address):
     is_available = models.BooleanField(default=True)
     available_from = models.TimeField(default='09:00:00')
     available_to = models.TimeField(default='18:00:00')
+    
+    # FIXED: Use a callable function for working_days
+    def default_working_days():
+        return ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday']
+    
     working_days = models.JSONField(
-        default=['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'],
+        default=default_working_days,  # Use callable function
         help_text="Days of week when provider is available"
     )
     emergency_service = models.BooleanField(default=False)
@@ -132,7 +139,6 @@ class ServiceProvider(BaseModel, Address):
     
     def update_rating(self):
         """Update average rating from reviews."""
-        # Use get_model to avoid circular imports
         from django.apps import apps
         Review = apps.get_model('reviews', 'Review')
         from django.db.models import Avg
@@ -147,7 +153,7 @@ class ServiceProvider(BaseModel, Address):
 class ProviderServiceCategory(BaseModel):
     """Intermediate model for provider-service category with additional data."""
     provider = models.ForeignKey(ServiceProvider, on_delete=models.CASCADE)
-    category = models.ForeignKey('services.ServiceCategory', on_delete=models.CASCADE)  # STRING REFERENCE
+    category = models.ForeignKey('services.ServiceCategory', on_delete=models.CASCADE)
     experience_years = models.PositiveIntegerField(default=0)
     is_primary = models.BooleanField(default=False)
     description = models.TextField(blank=True)
@@ -187,7 +193,7 @@ class ProviderDocument(BaseModel):
         on_delete=models.SET_NULL,
         null=True,
         blank=True,
-        limit_choices_to={'role': 'admin'}  # FIXED: Use string 'admin'
+        limit_choices_to={'role': 'admin'}
     )
     verified_at = models.DateTimeField(null=True, blank=True)
     verification_notes = models.TextField(blank=True, null=True)
