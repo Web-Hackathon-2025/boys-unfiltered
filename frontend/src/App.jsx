@@ -4,6 +4,8 @@ import ProtectedRoute from "./routes/ProtectedRoute";
 
 import Home from "./pages/Home";
 import Login from "./pages/auth/Login";
+import RegisterCustomer from "./pages/auth/RegisterCustomer";
+import RegisterProvider from "./pages/auth/RegisterProvider";
 import BrowseProviders from "./pages/customer/BrowseProviders";
 import ProviderProfile from "./pages/customer/ProviderProfile";
 import ProviderDashboard from "./pages/provider/Dashboard";
@@ -15,6 +17,8 @@ export default function App() {
       {/* Public */}
       <Route path="/" element={<Home />} />
       <Route path="/login" element={<Login />} />
+      <Route path="/register/customer" element={<RegisterCustomer />} />
+      <Route path="/register/provider" element={<RegisterProvider />} />
 
       {/* Customer Dashboard */}
       <Route

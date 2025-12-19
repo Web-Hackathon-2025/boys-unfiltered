@@ -33,13 +33,13 @@ export default function Home() {
 
             <div className="flex gap-4">
               <Link
-                to="/login"
+                to="/register/customer"
                 className="bg-green-500 hover:bg-green-600 text-white px-8 py-3 rounded-lg font-semibold transition"
               >
                 Get Started
               </Link>
               <Link
-                to="/login"
+                to="/register/provider"
                 className="border border-white/70 hover:bg-white hover:text-slate-900 px-8 py-3 rounded-lg font-semibold transition"
               >
                 Become a Provider
@@ -49,7 +49,11 @@ export default function Home() {
 
           {/* ILLUSTRATION */}
           <div className="w-full max-w-md mx-auto flex justify-center">
-            <FaTools className="text-green-500 text-9xl opacity-80" />
+            <img
+              src="https://illustrations.popsy.co/white/worker-with-tools.svg"
+              alt="Service Worker"
+              className="w-full h-auto opacity-80"
+            />
           </div>
         </div>
       </section>
@@ -90,7 +94,11 @@ export default function Home() {
 
           {/* ILLUSTRATION */}
           <div className="w-full max-w-md mx-auto flex justify-center">
-            <FaCalendarAlt className="text-blue-500 text-9xl opacity-80" />
+            <img
+              src="https://illustrations.popsy.co/white/calendar.svg"
+              alt="Calendar"
+              className="w-full h-auto opacity-80"
+            />
           </div>
 
           <div>

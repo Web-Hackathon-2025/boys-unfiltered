@@ -1,13 +1,37 @@
-import { useNavigate } from "react-router-dom";
+import { useState } from "react";
+import { useNavigate, Link } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 
 export default function Login() {
   const { login } = useAuth();
   const navigate = useNavigate();
+  const [formData, setFormData] = useState({
+    email: "",
+    password: "",
+  });
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
 
-  const handleLogin = (role) => {
-    login(role);
-    navigate(`/${role}`);
+  const handleChange = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setError("");
+    setLoading(true);
+
+    try {
+      const user = await login(formData.email, formData.password);
+      navigate(`/${user.role}`);
+    } catch (err) {
+      setError("Invalid email or password");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -24,34 +48,51 @@ export default function Login() {
             Login to continue
           </p>
 
-          {/* Mock role login buttons */}
-          <div className="space-y-3">
-            <button
-              onClick={() => handleLogin("customer")}
-              className="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 rounded font-medium"
-            >
-              Continue as Customer
-            </button>
+          {error && (
+            <div className="mb-4 text-red-600 text-sm">
+              {error}
+            </div>
+          )}
+
+          <form onSubmit={handleSubmit} className="space-y-4">
+            <input
+              type="email"
+              name="email"
+              placeholder="Email Address"
+              value={formData.email}
+              onChange={handleChange}
+              className="w-full border rounded px-4 py-2"
+              required
+            />
+
+            <input
+              type="password"
+              name="password"
+              placeholder="Password"
+              value={formData.password}
+              onChange={handleChange}
+              className="w-full border rounded px-4 py-2"
+              required
+            />
 
             <button
-              onClick={() => handleLogin("provider")}
-              className="w-full bg-green-600 hover:bg-green-700 text-white py-3 rounded font-medium"
+              type="submit"
+              disabled={loading}
+              className="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 rounded font-medium disabled:opacity-50"
             >
-              Continue as Service Provider
+              {loading ? "Logging in..." : "Login"}
             </button>
-
-            <button
-              onClick={() => handleLogin("admin")}
-              className="w-full bg-gray-800 hover:bg-gray-900 text-white py-3 rounded font-medium"
-            >
-              Continue as Admin
-            </button>
-          </div>
+          </form>
 
           <div className="mt-6 text-center text-sm text-gray-500">
-            This is a demo login UI.  
-            <br />
-            Backend auth will be added later.
+            Don't have an account?{" "}
+            <Link to="/register/customer" className="text-blue-600 hover:underline">
+              Register as Customer
+            </Link>{" "}
+            or{" "}
+            <Link to="/register/provider" className="text-green-600 hover:underline">
+              Register as Provider
+            </Link>
           </div>
         </div>
       </div>

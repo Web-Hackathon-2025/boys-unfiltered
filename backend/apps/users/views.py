@@ -9,7 +9,7 @@ from rest_framework.permissions import IsAuthenticated
 
 from .serializers import (
     UserSerializer, RegisterSerializer, LoginSerializer,
-    ProfileUpdateSerializer
+    ProfileUpdateSerializer, ProviderRegisterSerializer
 )
 from .permissions import IsAdmin, IsOwnerOrReadOnly
 
@@ -19,6 +19,11 @@ class RegisterView(generics.CreateAPIView):
     queryset = User.objects.all()
     permission_classes = [permissions.AllowAny]
     serializer_class = RegisterSerializer
+
+class ProviderRegisterView(generics.CreateAPIView):
+    queryset = User.objects.all()
+    permission_classes = [permissions.AllowAny]
+    serializer_class = ProviderRegisterSerializer
 
 class LoginView(TokenObtainPairView):
     serializer_class = LoginSerializer

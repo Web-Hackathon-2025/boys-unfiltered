@@ -1,7 +1,10 @@
 import { Link } from "react-router-dom";
-import { FaTools, FaUserCircle } from "react-icons/fa";
+import { FaTools, FaUserCircle, FaSignOutAlt } from "react-icons/fa";
+import { useAuth } from "../../context/AuthContext";
 
 export default function Header() {
+  const { user, logout } = useAuth();
+
   return (
     <header className="bg-slate-900 text-white sticky top-0 z-50">
       <div className="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
@@ -22,36 +25,47 @@ export default function Header() {
           >
             Home
           </Link>
-          <Link
-            to="/customer"
-            className="hover:text-green-400 transition"
-          >
-            Services
-          </Link>
-          <Link
-            to="/login"
-            className="hover:text-green-400 transition"
-          >
-            Become a Provider
-          </Link>
+          {user && (
+            <Link
+              to={`/${user.role}`}
+              className="hover:text-green-400 transition"
+            >
+              Dashboard
+            </Link>
+          )}
         </nav>
 
         {/* AUTH / CTA */}
         <div className="flex items-center gap-4">
-          <Link
-            to="/login"
-            className="flex items-center gap-2 text-sm hover:text-green-400 transition"
-          >
-            <FaUserCircle />
-            Login
-          </Link>
+          {user ? (
+            <>
+              <span className="text-sm">Welcome, {user.name}</span>
+              <button
+                onClick={logout}
+                className="flex items-center gap-2 text-sm hover:text-green-400 transition"
+              >
+                <FaSignOutAlt />
+                Logout
+              </button>
+            </>
+          ) : (
+            <>
+              <Link
+                to="/login"
+                className="flex items-center gap-2 text-sm hover:text-green-400 transition"
+              >
+                <FaUserCircle />
+                Login
+              </Link>
 
-          <Link
-            to="/login"
-            className="hidden sm:inline-block bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-lg text-sm font-semibold transition"
-          >
-            Get Started
-          </Link>
+              <Link
+                to="/register/customer"
+                className="hidden sm:inline-block bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-lg text-sm font-semibold transition"
+              >
+                Get Started
+              </Link>
+            </>
+          )}
         </div>
       </div>
     </header>
