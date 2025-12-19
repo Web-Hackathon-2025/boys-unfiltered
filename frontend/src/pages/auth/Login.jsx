@@ -3,6 +3,10 @@ import { useNavigate, Link } from "react-router-dom";
 import { authAPI, getCurrentUser } from "../../services/api";
 
 export default function Login() {
+<<<<<<< HEAD
+=======
+  const { login, demoLogin } = useAuth();
+>>>>>>> c229480abe1d16e291e9eb5d70fc6b39e8fd2577
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
     email: "",
@@ -44,6 +48,11 @@ export default function Login() {
     } finally {
       setLoading(false);
     }
+  };
+
+  const handleDemoLogin = (role) => {
+    demoLogin(role);
+    navigate(`/${role}`);
   };
 
   return (
@@ -105,6 +114,30 @@ export default function Login() {
             <Link to="/register/provider" className="text-green-600 hover:underline font-medium">
               Register as Provider
             </Link>
+          </div>
+
+          <div className="mt-4">
+            <p className="text-center text-xs text-gray-400 mb-2">Demo Logins</p>
+            <div className="space-y-2">
+              <button
+                onClick={() => handleDemoLogin("customer")}
+                className="w-full bg-blue-100 hover:bg-blue-200 text-blue-700 py-2 rounded text-sm font-medium"
+              >
+                Demo Customer Login
+              </button>
+              <button
+                onClick={() => handleDemoLogin("provider")}
+                className="w-full bg-green-100 hover:bg-green-200 text-green-700 py-2 rounded text-sm font-medium"
+              >
+                Demo Provider Login
+              </button>
+              <button
+                onClick={() => handleDemoLogin("admin")}
+                className="w-full bg-gray-100 hover:bg-gray-200 text-gray-700 py-2 rounded text-sm font-medium"
+              >
+                Demo Admin Login
+              </button>
+            </div>
           </div>
         </div>
       </div>

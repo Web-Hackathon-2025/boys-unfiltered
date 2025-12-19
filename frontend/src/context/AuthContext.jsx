@@ -48,8 +48,33 @@ export const AuthProvider = ({ children }) => {
     // Optionally call logout API
   };
 
+  const demoLogin = (role) => {
+    if (role === "provider") {
+      setUser({
+        id: 1,
+        email: "provider@example.com",
+        role: "provider",
+        name: "Muhammad Ali",
+      });
+    } else if (role === "customer") {
+      setUser({
+        id: 101,
+        email: "customer@example.com",
+        role: "customer",
+        name: "Rohan Singh",
+      });
+    } else if (role === "admin") {
+      setUser({
+        id: 999,
+        email: "admin@example.com",
+        role: "admin",
+        name: "Admin User",
+      });
+    }
+  };
+
   return (
-    <AuthContext.Provider value={{ user, login, logout, loading }}>
+    <AuthContext.Provider value={{ user, login, logout, demoLogin, loading }}>
       {children}
     </AuthContext.Provider>
   );
