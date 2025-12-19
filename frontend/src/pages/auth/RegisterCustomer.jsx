@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { authAPI } from "../../services/api";
+import { authAPI } from "../../api/api";
 
 export default function RegisterCustomer() {
   const [formData, setFormData] = useState({

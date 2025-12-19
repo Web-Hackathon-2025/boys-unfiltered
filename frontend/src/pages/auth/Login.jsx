@@ -1,12 +1,9 @@
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
-import { authAPI, getCurrentUser } from "../../services/api";
+import { authAPI, getCurrentUser } from "../../api/index";
 
 export default function Login() {
-<<<<<<< HEAD
-=======
   const { login, demoLogin } = useAuth();
->>>>>>> c229480abe1d16e291e9eb5d70fc6b39e8fd2577
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
     email: "",

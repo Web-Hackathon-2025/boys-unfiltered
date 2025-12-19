@@ -624,7 +624,7 @@ export const notificationsAPI = {
 export {
   api as default,
   API_BASE_URL,
-  isAuthenticated,
-  getCurrentUser,
-  getUserRole,
+  //isAuthenticated,
+  //getCurrentUser,
+ // getUserRole,
 };
