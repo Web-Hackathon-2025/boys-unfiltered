@@ -1,0 +1,19 @@
+Django==4.2.0
+djangorestframework==3.14.0
+django-cors-headers==4.2.0
+django-filter==23.3
+drf-yasg==1.21.7
+psycopg2-binary
+redis==4.6.0
+celery==5.3.1
+django-celery-beat==2.5.0
+django-celery-results==2.5.1
+djangorestframework-gis  # For location-based services
+django-phonenumber-field==7.2.0
+django-countries==7.5.1
+Pillow
+stripe==7.0.0
+django-storages==1.13.2
+boto3==1.28.0
+python-decouple==3.8
+django-debug-toolbar==4.1.0
