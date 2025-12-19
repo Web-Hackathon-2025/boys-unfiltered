@@ -1,4 +1,8 @@
-export default function RequestServiceModal({ provider, onClose, onConfirm }) {
+export default function RequestServiceModal({
+  provider,
+  onClose,
+  onConfirm,
+}) {
   return (
     <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50">
       <div className="bg-white rounded-xl p-6 w-full max-w-md">
@@ -34,7 +38,7 @@ export default function RequestServiceModal({ provider, onClose, onConfirm }) {
           >
             Cancel
           </button>
-          <button 
+          <button
             onClick={onConfirm}
             className="px-4 py-2 bg-blue-600 text-white rounded"
           >
