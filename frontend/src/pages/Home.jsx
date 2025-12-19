@@ -8,6 +8,8 @@ import {
   FaSnowflake,
   FaPaintRoller,
   FaBroom,
+  FaCalendarAlt,
+  FaCheckCircle,
 } from "react-icons/fa";
 
 export default function Home() {
@@ -45,12 +47,10 @@ export default function Home() {
             </div>
           </div>
 
-          {/* ILLUSTRATION (unDraw – open source) */}
-          <img
-            src="https://undraw.co/api/illustrations/maintenance_re_59vn.svg"
-            alt="Service professionals illustration"
-            className="w-full max-w-md mx-auto"
-          />
+          {/* ILLUSTRATION */}
+          <div className="w-full max-w-md mx-auto flex justify-center">
+            <FaTools className="text-green-500 text-9xl opacity-80" />
+          </div>
         </div>
       </section>
 
@@ -72,6 +72,15 @@ export default function Home() {
             <ServiceCard icon={<FaPaintRoller />} title="Painter" />
             <ServiceCard icon={<FaBroom />} title="Cleaning" />
           </div>
+
+          <div className="text-center mt-8">
+            <Link
+              to="/login"
+              className="inline-block bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg font-semibold transition"
+            >
+              Login to Browse All Services
+            </Link>
+          </div>
         </div>
       </section>
 
@@ -80,11 +89,9 @@ export default function Home() {
         <div className="max-w-6xl mx-auto px-6 grid md:grid-cols-2 gap-12 items-center">
 
           {/* ILLUSTRATION */}
-          <img
-            src="https://undraw.co/api/illustrations/online_booking_re_gw4f.svg"
-            alt="Booking process illustration"
-            className="w-full max-w-md mx-auto"
-          />
+          <div className="w-full max-w-md mx-auto flex justify-center">
+            <FaCalendarAlt className="text-blue-500 text-9xl opacity-80" />
+          </div>
 
           <div>
             <h2 className="text-2xl font-bold mb-8">
